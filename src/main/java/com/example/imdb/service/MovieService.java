@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +32,8 @@ public class MovieService {
      */
     public List<MovieDto> getTopMoviesWithPlot(String actor, int limit) {
         log.info("Fetching top {} movies for actor: {}", limit, actor);
-
+        List<Map<String, Object>> results = movieRepository.findTopMoviesByActor(actor, limit);
+        log.info("Found {} movies for actor: {}", results.size(), actor);
         return movieRepository.findTopMoviesByActor(actor, limit)
                 .stream()
                 .map(row -> {
